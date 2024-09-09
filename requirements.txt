@@ -1,0 +1,10 @@
+flask
+xgboost
+pandas
+numpy
+matplotlib.pyplot
+seaborn
+sklearn.model_selection 
+ sklearn.linear_model 
+ xgboost
+ sklearn.metrics
