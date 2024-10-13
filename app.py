@@ -7,6 +7,7 @@ app = Flask(__name__)
 bot = FinBot()
 
 details_check = False
+acc_no_check = False
 
 @app.route("/")
 def index_get():
@@ -15,8 +16,18 @@ def index_get():
 @app.route("/predict", methods=['POST'])
 def predict():
     global details_check
+    global acc_no_check
     data = request.get_json().get("message").lower()
-
+    if acc_no_check:
+        try:
+            acc_no=data
+            if acc_no:
+                response = bot.analyze_transaction_density(int(acc_no))
+                acc_no_check=False 
+                return jsonify({'answer': response})
+        except ValueError:
+                return jsonify({"answer": "Please provide the proper account number or your account number doesnt exists in our system"})
+        
     if details_check:
         try:
             acc_no,yr = data.split(",")
@@ -45,7 +56,9 @@ def predict():
     elif prediction == "balance evolution":
         response = bot.balance_evolution()
     elif prediction == "transaction density":
-        response = bot.analyze_transaction_density()
+        acc_no_check = True
+        response = "Please provide the account number"
+        
     elif prediction == "predict balance":
         details_check = True
         response = "Please provide the account number and year separated by ','"
