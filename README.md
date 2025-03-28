@@ -6,7 +6,8 @@ This chatbot was intended to serve as a virtual financial advisor, assisting use
 
 
 
-# Performance Metrics:
+# Performance Metrics
 
 Accuracy of NLP Component: 96%
+<br>
 R2 Score of Balance Predictor: 97%
