@@ -25,7 +25,8 @@ class FinBot:
         return "Okay, Thank you for using our service"
     
     def analyze_transaction_density(self,acc_no):
-      transaction_density=self.df.groupby(['Account No','VALUE DATE'])['DEPOSIT AMT'].count()
+      filtered_based_on_accno_date=self.df.groupby(['Account No','VALUE DATE']).count()[['WITHDRAWAL AMT','DEPOSIT AMT']]
+      transaction_density=filtered_based_on_accno_date['WITHDRAWAL AMT']+filtered_based_on_accno_date['DEPOSIT AMT']
       transaction_density=transaction_density[acc_no]
       avg_transaction_density = transaction_density.mean()
       max_transaction_density = transaction_density.max()
